@@ -335,7 +335,7 @@ MonoBehaviour:
   RandomVelocityRange: 20
   BeePrefab: {fileID: 5462479523627905437, guid: 719093942a6344a42b03d99cc0885104, type: 3}
   Cohesion: 0.07
-  Separation: 0.05
+  Separation: 0.5
   SeparationDistance: 4
   Alignment: 0.08
   SightRange: 23.58
