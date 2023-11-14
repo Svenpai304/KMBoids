@@ -5,11 +5,22 @@ using UnityEngine;
 public class Bee : MonoBehaviour
 {
     public Vector3 Velocity;
-    public HiveController Controller;
+    private Transform model;
+    private HiveController controller;
+
+    public void Setup(HiveController _controller)
+    {
+        controller = _controller;
+        transform.position += Random.insideUnitSphere * controller.RandomPosRange;
+        Velocity = Random.insideUnitSphere * controller.RandomVelocityRange;
+        controller.bees.Add(this);
+
+        model = transform.GetChild(0);
+    }
 
     public void BeeUpdate(float deltaTime)
     {
-        List<Bee> influencers = FindNearbyBees(Controller.bees);
+        List<Bee> influencers = FindNearbyBees(controller.bees);
         if (influencers.Count > 0)
         {
             Cohere(influencers);
@@ -18,7 +29,8 @@ public class Bee : MonoBehaviour
         }
         CheckBounds();
         transform.Translate(Velocity * deltaTime);
-
+        model.rotation = Quaternion.FromToRotation(Vector3.up, Velocity);
+        Debug.DrawRay(transform.position, Velocity, Color.red, Time.fixedDeltaTime);
     }
 
     private List<Bee> FindNearbyBees(List<Bee> bees)
@@ -26,7 +38,7 @@ public class Bee : MonoBehaviour
         List<Bee> found = new List<Bee>();
         foreach (Bee bee in bees)
         {
-            if(bee != this && (bee.transform.position - transform.position).magnitude < Controller.SightRange)
+            if(bee != this && (bee.transform.position - transform.position).magnitude < controller.SightRange)
             {
                 found.Add(bee);
             }
@@ -42,7 +54,7 @@ public class Bee : MonoBehaviour
             c += bee.transform.position;
         }
         c = c / bees.Count;
-        Velocity += (c - transform.position) * Controller.Cohesion;
+        Velocity += (c - transform.position) * controller.Cohesion;
     }
 
     private void Separate(List<Bee> bees)
@@ -50,12 +62,12 @@ public class Bee : MonoBehaviour
         Vector3 c = Vector3.zero;
         foreach (Bee bee in bees)
         {
-            if ((bee.transform.position - transform.position).magnitude < Controller.SeparationDistance)
+            if ((bee.transform.position - transform.position).magnitude < controller.SeparationDistance)
             {
-                c -= bee.transform.position - transform.position;
+                c -= (bee.transform.position - transform.position).normalized;
             }
         }
-        Velocity += c * Controller.Separation;
+        Velocity += c * controller.Separation;
     }
 
     private void Align(List<Bee> bees)
@@ -66,22 +78,22 @@ public class Bee : MonoBehaviour
             c += bee.Velocity;
         }
         c /= bees.Count;
-        Velocity += (c - Velocity) * Controller.Alignment;
+        Velocity += (c - Velocity) * controller.Alignment;
     }
 
     private void CheckBounds()
     {
-        if(Mathf.Abs(transform.position.x) >= Controller.BoundsRange && Mathf.Sign(Velocity.x) == Mathf.Sign(transform.position.x))
+        if(Mathf.Abs(transform.position.x) >= controller.BoundsRange && Mathf.Sign(Velocity.x) == Mathf.Sign(transform.position.x))
         {
-            Velocity.x *= -Controller.BoundsHitSpeedModifier;
+            Velocity.x *= -controller.BoundsHitSpeedModifier;
         }
-        if (Mathf.Abs(transform.position.y) >= Controller.BoundsRange && Mathf.Sign(Velocity.y) == Mathf.Sign(transform.position.y))
+        if (Mathf.Abs(transform.position.y) >= controller.BoundsRange && Mathf.Sign(Velocity.y) == Mathf.Sign(transform.position.y))
         {
-            Velocity.y *= -Controller.BoundsHitSpeedModifier;
+            Velocity.y *= -controller.BoundsHitSpeedModifier;
         }
-        if (Mathf.Abs(transform.position.z) >= Controller.BoundsRange && Mathf.Sign(Velocity.z) == Mathf.Sign(transform.position.z))
+        if (Mathf.Abs(transform.position.z) >= controller.BoundsRange && Mathf.Sign(Velocity.z) == Mathf.Sign(transform.position.z))
         {
-            Velocity.z *= -Controller.BoundsHitSpeedModifier;
+            Velocity.z *= -controller.BoundsHitSpeedModifier;
         }
 
     }

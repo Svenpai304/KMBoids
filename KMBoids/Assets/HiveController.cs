@@ -23,10 +23,7 @@ public class HiveController : MonoBehaviour
         for(int i = 0; i < BeeCount; i++)
         {
             Bee bee = Instantiate(BeePrefab).GetComponent<Bee>();
-            bee.Controller = this;
-            bee.transform.position += Random.insideUnitSphere * RandomPosRange;
-            bee.Velocity = Random.insideUnitSphere * RandomVelocityRange;
-            bees.Add(bee);
+            bee.Setup(this);
         }
     }
 
