@@ -13,14 +13,14 @@ public class Bee : MonoBehaviour
         controller = _controller;
         transform.position += Random.insideUnitSphere * controller.RandomPosRange;
         Velocity = Random.insideUnitSphere * controller.RandomVelocityRange;
-        controller.bees.Add(this);
+        controller.Bees.Add(this);
 
         model = transform.GetChild(0);
     }
 
     public void BeeUpdate(float deltaTime)
     {
-        List<Bee> influencers = FindNearbyBees(controller.bees);
+        List<Bee> influencers = FindNearbyBees(controller.Bees);
         if (influencers.Count > 0)
         {
             Cohere(influencers);
@@ -64,7 +64,7 @@ public class Bee : MonoBehaviour
         {
             if ((bee.transform.position - transform.position).magnitude < controller.SeparationDistance)
             {
-                c -= (bee.transform.position - transform.position).normalized;
+                c -= (bee.transform.position - transform.position);
             }
         }
         Velocity += c * controller.Separation;

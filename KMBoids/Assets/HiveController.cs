@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class HiveController : MonoBehaviour
 {
+    [Header("Setup")]
     public int BeeCount;
+    public float RandomPosRange;
+    public float RandomVelocityRange;
+    public GameObject BeePrefab;
+    [Header("Behaviour modifiers")]
     public float Cohesion;
     public float Separation;
     public float SeparationDistance;
     public float Alignment;
     public float SightRange;
-    public float RandomPosRange;
-    public float RandomVelocityRange;
+    [Header("Bounds settings")]
     public float BoundsRange;
     public float BoundsHitSpeedModifier;
-    public GameObject BeePrefab;
 
-    public List<Bee> bees = new List<Bee>();
+    [HideInInspector]public List<Bee> Bees = new List<Bee>();
 
     private void Start()
     {
@@ -29,7 +32,7 @@ public class HiveController : MonoBehaviour
 
     void FixedUpdate()
     {
-        foreach(Bee bee in bees)
+        foreach(Bee bee in Bees)
         {
             bee.BeeUpdate(Time.fixedDeltaTime);
         }
