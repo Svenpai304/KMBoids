@@ -11,6 +11,9 @@ public class HiveController : MonoBehaviour
     public float Alignment;
     public float SightRange;
     public float RandomPosRange;
+    public float RandomVelocityRange;
+    public float BoundsRange;
+    public float BoundsHitSpeedModifier;
     public GameObject BeePrefab;
 
     public List<Bee> bees = new List<Bee>();
@@ -19,8 +22,10 @@ public class HiveController : MonoBehaviour
     {
         for(int i = 0; i < BeeCount; i++)
         {
-            Bee bee = new Bee(BeePrefab, this);
-            bee.Object.transform.position += Random.insideUnitSphere * RandomPosRange;
+            Bee bee = Instantiate(BeePrefab).GetComponent<Bee>();
+            bee.Controller = this;
+            bee.transform.position += Random.insideUnitSphere * RandomPosRange;
+            bee.Velocity = Random.insideUnitSphere * RandomVelocityRange;
             bees.Add(bee);
         }
     }
@@ -29,7 +34,7 @@ public class HiveController : MonoBehaviour
     {
         foreach(Bee bee in bees)
         {
-            bee.Update(Time.fixedDeltaTime);
+            bee.BeeUpdate(Time.fixedDeltaTime);
         }
     }
 }

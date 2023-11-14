@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -331,13 +331,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BeeCount: 20
-  Cohesion: 0.01
-  Separation: 0.2
-  SeparationDistance: 100
-  Alignment: 0.01
-  SightRange: 53.4
-  RandomPosRange: 0.3
+  Cohesion: 0.07
+  Separation: 0.05
+  SeparationDistance: 4
+  Alignment: 0.08
+  SightRange: 23.58
+  RandomPosRange: 40
+  RandomVelocityRange: 5
+  BoundsRange: 50
+  BoundsHitSpeedModifier: 1.05
   BeePrefab: {fileID: 5462479523627905437, guid: 719093942a6344a42b03d99cc0885104, type: 3}
+  bees: []
 --- !u!4 &1319400525
 Transform:
   m_ObjectHideFlags: 0
