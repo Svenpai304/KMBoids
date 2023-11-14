@@ -331,17 +331,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BeeCount: 100
+  RandomPosRange: 80
+  RandomVelocityRange: 20
+  BeePrefab: {fileID: 5462479523627905437, guid: 719093942a6344a42b03d99cc0885104, type: 3}
   Cohesion: 0.07
   Separation: 0.05
   SeparationDistance: 4
   Alignment: 0.08
   SightRange: 23.58
-  RandomPosRange: 80
-  RandomVelocityRange: 5
   BoundsRange: 50
-  BoundsHitSpeedModifier: 1.05
-  BeePrefab: {fileID: 5462479523627905437, guid: 719093942a6344a42b03d99cc0885104, type: 3}
-  bees: []
+  BoundsHitSpeedModifier: 1.2
+  Bees: []
 --- !u!4 &1319400525
 Transform:
   m_ObjectHideFlags: 0
